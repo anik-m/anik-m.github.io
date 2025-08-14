@@ -2,170 +2,161 @@
 ====================================
   1. Design System & Global Styles
 ====================================
-- Defines a modern color palette and typography using CSS variables.
-- Uses a dark, subtle gradient background.
-- Sets professional, readable fonts for the entire page.
 */
 :root {
     --bg-color: #121828;
-    --card-color: rgba(23, 29, 46, 0.7);
+    --sidebar-bg: #1A202C;
+    --content-bg: #2D3748;
     --primary-text: #E2E8F0;
     --secondary-text: #A0AEC0;
-    --accent-color: #38BDF8; /* A vibrant, sky-blue accent */
+    --accent-color: #38BDF8;
     --border-color: rgba(56, 189, 248, 0.2);
+    --hover-bg: rgba(56, 189, 248, 0.1);
 
     --font-heading: 'Poppins', sans-serif;
     --font-body: 'Open Sans', sans-serif;
 }
 
-body.page {
-    background-color: var(--bg-color);
-    background-image: radial-gradient(circle at top left, rgba(56, 189, 248, 0.1), transparent 30%),
-                      radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.1), transparent 30%);
-    font-family: var(--font-body);
-    color: var(--primary-text);
-    
-    /* Center the main content card on the page */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+body {
     margin: 0;
-    padding: 1rem;
-    box-sizing: border-box;
+    background-color: var(--bg-color);
+    color: var(--primary-text);
+    font-family: var(--font-body);
 }
 
 /*
 ====================================
-  2. Main Content Card Layout
+  2. Main Layout (Sidebar + Content)
 ====================================
-- Creates a "glassmorphism" effect for the main container.
-- Uses flexbox for a robust two-column layout.
-- Adds subtle shadows and borders for depth.
 */
-.row {
+.page {
     display: flex;
-    align-items: center;
-    background: var(--card-color);
-    border-radius: 16px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    
-    padding: 3rem 4rem;
-    max-width: 900px;
-    width: 100%;
-    transition: all 0.3s ease-in-out;
+    min-height: 100vh;
 }
 
-.left {
-    flex: 1.5; /* Give the left side a bit more space */
-    padding-right: 3rem;
-    border-right: 1px solid var(--border-color);
-}
-
-.right {
-    flex: 1;
-    padding-left: 3rem;
+.sidebar {
+    width: 260px;
+    background-color: var(--sidebar-bg);
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem; /* Clean spacing between social links */
+    box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    flex-shrink: 0; /* Prevents sidebar from shrinking */
 }
 
+.main-content {
+    flex-grow: 1; /* Takes up the remaining space */
+    padding: 2rem 3rem;
+    overflow-y: auto; /* Allows content to scroll */
+}
 
 /*
 ====================================
-  3. Typography & Text Styling
+  3. Sidebar Styling
 ====================================
-- Creates a vibrant gradient effect for the main heading.
-- Establishes a clear visual hierarchy.
 */
-.header-1 {
+.sidebar-header {
     font-family: var(--font-heading);
-    font-size: clamp(3rem, 10vw, 5rem); /* Responsive font size */
-    font-weight: 700;
-    margin: 0 0 0.5rem 0;
-    
-    /* Gradient text effect */
-    background: linear-gradient(45deg, var(--accent-color), #f7fafc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
+    color: var(--primary-text);
+    margin-bottom: 2rem;
+    text-align: center;
 }
 
-.header-3 {
-    font-size: 1.125rem;
-    font-weight: 400;
+.nav-item {
     color: var(--secondary-text);
-    line-height: 1.6;
-    margin: 0;
-}
-
-
-/*
-====================================
-  4. Social Icons & Interactivity
-====================================
-- Styles social links for a clean, modern look.
-- Adds a smooth and engaging hover animation.
-*/
-.social-icons {
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 0.9rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     gap: 1rem;
-    
-    color: var(--secondary-text);
-    text-decoration: none;
-    font-size: 1.25rem;
-    font-weight: 600;
     transition: all 0.2s ease-out;
 }
 
-.social-icons ion-icon {
-    font-size: 1.75rem; /* Make icons slightly larger */
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.social-icons:hover {
+.nav-item:hover {
+    background-color: var(--hover-bg);
     color: var(--accent-color);
-    transform: translateX(5px); /* Subtle shift on hover */
 }
 
-.social-icons:hover ion-icon {
-    transform: scale(1.1) rotate(-5deg); /* Playful icon animation */
+.nav-item.active {
+    background-color: var(--hover-bg);
+    color: var(--accent-color);
+    font-weight: 600;
 }
 
+.nav-item ion-icon {
+    font-size: 1.4rem;
+}
 
 /*
 ====================================
-  5. Responsive Design (Mobile)
+  4. Homepage-Specific Layout
 ====================================
-- Stacks content vertically on screens smaller than 768px.
-- Adjusts padding and alignment for a better mobile experience.
 */
-@media (max-width: 768px) {
-    .row {
+.homepage .main-content {
+    /* Override standard layout to center the card */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.homepage-card {
+    text-align: center;
+    padding: 3rem 4rem;
+    background: var(--content-bg);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.homepage-card h1 {
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    color: var(--accent-color);
+}
+
+/*
+====================================
+  5. Responsive Design (Mobile) 📱
+====================================
+*/
+@media (max-width: 800px) {
+    .page {
         flex-direction: column;
-        padding: 2.5rem 2rem;
-        text-align: center;
     }
 
-    .left {
-        padding-right: 0;
-        border-right: none;
-        border-bottom: 1px solid var(--border-color);
-        padding-bottom: 2rem;
-        margin-bottom: 2rem;
+    .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
 
-    .right {
-        padding-left: 0;
-        align-items: center; /* Center the social links */
+    .sidebar-header {
+        display: none; /* Hide header on mobile nav */
     }
 
-    .social-icons:hover {
-        transform: translateY(-3px); /* Change animation for mobile */
+    .nav-item {
+        flex-direction: column;
+        gap: 0.2rem;
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .main-content {
+        padding: 1.5rem;
+    }
+
+    .homepage-card {
+        padding: 2rem;
+    }
+
+    .homepage-card h1 {
+        font-size: 3rem;
     }
 }
